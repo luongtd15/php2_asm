@@ -63,17 +63,13 @@
                             <img src="http://localhost/PHP2/asm/image/logo/logo.png" alt="logo" class="logo">
                             <img src="http://localhost/PHP2/asm/image/logo/dark-logo.png" alt="logo" class="dark-logo">
                         </a>
-                        <form class="cr-search">
-                            <input class="search-input" type="text" placeholder="Search For items...">
-                            <select class="form-select" aria-label="Default select example">
-                                <option selected>All Categories</option>
-                                <option value="1">Mens</option>
-                                <option value="2">Womens</option>
-                                <option value="3">Electronics</option>
-                            </select>
-                            <a href="javascript:void(0)" class="search-btn">
+                        <form class="cr-search" action="{{ APP_URL . 'search' }}">
+                            <input class="search-input" type="text" placeholder="Search..." name="search">
+
+                            <button type="submit" class="search-btn">
                                 <i class="ri-search-line"></i>
-                            </a>
+                            </button>
+
                         </form>
                         <div class="cr-right-bar">
                             <ul class="navbar-nav">
@@ -82,6 +78,29 @@
                                         <i class="ri-user-3-line"></i>
                                         <span>Account</span>
                                     </a>
+                                    @if (isset($_SESSION['customer_logged_in']))
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a class="dropdown-item">
+                                                {{ $_SESSION['customer_logged_in']->username }}
+                                            </a>
+                                        </li>
+
+                                        <li>
+                                            <a class="dropdown-item">
+                                                {{ $_SESSION['customer_logged_in']->email }}
+                                            </a>
+                                        </li>
+
+                                        <li class="border-top">
+                                            <!-- <i class="ri-logout-circle-r-line"></i> -->
+                                            <a class="dropdown-item" href="{{ APP_URL .'logout' }}"
+                                                onclick="return confirm('Are you sure you want to logout?')">
+                                                Logout</a>
+                                        </li>
+
+                                    </ul>
+                                    @else
                                     <ul class="dropdown-menu">
                                         <li>
                                             <a class="dropdown-item" href="http://localhost/PHP2/asm/register">Register</a>
@@ -93,6 +112,7 @@
                                             <a class="dropdown-item" href="http://localhost/PHP2/asm/login">Login</a>
                                         </li>
                                     </ul>
+                                    @endif
                                 </li>
                             </ul>
                             <a href="wishlist.html" class="cr-right-bar-item">
@@ -123,17 +143,8 @@
                                     <a class="nav-link" href="javascript:void(0)">
                                         <i class="ri-user-3-line"></i>
                                     </a>
-                                    <ul class="dropdown-menu">
-                                        <li>
-                                            <a class="dropdown-item" href="http://localhost/PHP2/asm/register">Register</a>
-                                        </li>
-                                        <!-- <li>
-                                            <a class="dropdown-item" href="checkout.html">Checkout</a>
-                                        </li> -->
-                                        <li>
-                                            <a class="dropdown-item" href="http://localhost/PHP2/asm/login">Login</a>
-                                        </li>
-                                    </ul>
+
+
                                 </li>
                             </ul>
                             <a href="wishlist.html" class="cr-right-bar-item">
@@ -158,42 +169,20 @@
                                 </li>
 
                                 <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="javascript:void(0)">
-                                        Category
-                                    </a>
-                                    <ul class="dropdown-menu">
-                                        <li>
-                                            <a class="dropdown-item" href="http://localhost/PHP2/asm/category/apple">Apple</a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="http://localhost/PHP2/asm/category/grapes">Grapes</a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="http://localhost/PHP2/asm/category/peach">Peach</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="javascript:void(0)">
+                                    <a class="nav-link dropdown-toggle" href="{{ APP_URL . 'products' }}">
                                         Products
                                     </a>
+
                                     <ul class="dropdown-menu">
+                                        @if (isset($categories))
+                                        @foreach ($categories as $category)
                                         <li>
-                                            <a class="dropdown-item" href="product-left-sidebar.html">product
-                                                Left
-                                                sidebar </a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="product-right-sidebar.html">product
-                                                Right
-                                                sidebar </a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="product-full-width.html">Product
-                                                Full
-                                                Width
+                                            <a class="dropdown-item" href="{{ APP_URL . 'products/' . strtolower($category->id) }}">
+                                                {{ $category->name }}
                                             </a>
                                         </li>
+                                        @endforeach
+                                        @endif
                                     </ul>
                                 </li>
 

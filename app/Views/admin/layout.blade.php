@@ -1,13 +1,5 @@
-<!-----------------------------------------------------------------------------------
-    Item Name: Carrot - Multipurpose eCommerce HTML Template.
-    Author: ashishmaraviya
-    Version: 2.1
-    Copyright 2024
------------------------------------------------------------------------------------>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-
-
 <!-- Mirrored from maraviyainfotech.com/projects/carrot/carrot-v21/admin-html/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 06 Nov 2024 15:41:02 GMT -->
 
 <head>
@@ -75,7 +67,7 @@
                                 </form>
                             </div>
                         </div>
-                        
+
                     </div>
                     <div class="right-header">
                         <div class="cr-right-tool cr-flag-drop language">
@@ -147,8 +139,8 @@
                                 </div>
                                 <div class="cr-hover-drop-panel right">
                                     <div class="details">
-                                        <h6>Wiley Waites</h6>
-                                        <p>wiley@example.com</p>
+                                        <h6>{{ $_SESSION['admin_logged_in']->username }}</h6>
+                                        <p>{{ $_SESSION['admin_logged_in']->email }}</p>
                                     </div>
                                     <ul class="border-top">
                                         <li><a href="team-profile.html">Profile</a></li>
@@ -158,7 +150,10 @@
                                         <li><a href="team-update.html">Settings</a></li>
                                     </ul>
                                     <ul class="border-top">
-                                        <li><a href="signin.html"><i class="ri-logout-circle-r-line"></i>Logout</a></li>
+                                        <li>
+                                            <a href="{{ APP_URL . 'logout' }}" onclick="return confirm('Want to logout?')">
+                                                <i class="ri-logout-circle-r-line"></i>Logout</a>
+                                        </li>
                                     </ul>
                                 </div>
                             </div>
@@ -187,38 +182,11 @@
                                             class="ri-checkbox-blank-circle-line"></i>Category list</a></li>
                                 <li><a href="http://localhost/PHP2/asm/admin/products" class="cr-page-link drop"><i
                                             class="ri-checkbox-blank-circle-line"></i>Product list</a></li>
-                                <li><a href="http://localhost/PHP2/asm/admin/" class="cr-page-link drop"><i
+                                <li><a href="{{ APP_URL . 'admin/users' }}" class="cr-page-link drop"><i
                                             class="ri-checkbox-blank-circle-line"></i>User list</a></li>
-                                <li><a href="http://localhost/PHP2/asm/admin/" class="cr-page-link drop"><i
-                                            class="ri-checkbox-blank-circle-line"></i>Comment list</a></li>
-                                <li><a href="http://localhost/PHP2/asm/admin/" class="cr-page-link drop"><i
-                                            class="ri-checkbox-blank-circle-line"></i></a></li>
-                                <li><a href="http://localhost/PHP2/asm/admin/" class="cr-page-link drop"><i
-                                            class="ri-checkbox-blank-circle-line"></i>Order List</a></li>
-
-                                <!-- <li class="cr-sb-item sb-subdrop-item">
-                                    <a href="javascript:void(0)" class="cr-sub-drop-toggle">
-                                        <i class="ri-shield-user-line"></i><span class="condense">Vendor<i
-                                                class="drop-arrow ri-arrow-down-s-line"></i></span></a>
-                                    <ul class="cr-sb-subdrop condense">
-                                        <li><a href="vendor-profile.html" class="cr-page-link subdrop"><i
-                                                    class="ri-checkbox-blank-circle-line"></i>Profile</a></li>
-                                        <li><a href="vendor-update.html" class="cr-page-link subdrop"><i
-                                                    class="ri-checkbox-blank-circle-line"></i>Vendor Update</a></li>
-                                        <li><a href="vendor-list.html" class="cr-page-link subdrop"><i
-                                                    class="ri-checkbox-blank-circle-line"></i>Vendor List</a></li>
-                                        <li><a href="invoice.html" class="cr-page-link subdrop"><i
-                                                    class="ri-checkbox-blank-circle-line"></i>Invoice</a></li>
-                                    </ul>
-                                </li> -->
-                            </ul>
                         </li>
-
-
-
-                        <li class="cr-sb-item-separator"></li>
-
                     </ul>
+
                 </div>
             </div>
         </div>

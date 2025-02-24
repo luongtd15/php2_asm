@@ -2,26 +2,22 @@
 
 namespace App\Controllers;
 
+use App\Models\Category;
+use App\Models\Product;
+
 class CategoryController
 {
 
-    public function apple()
+    public function productByCategory($id)
     {
-        return view('categories.apple');
-    }
-
-    public function grapes()
-    {
-        return view('categories.grapes');
-    }
-
-    public function peach()
-    {
-        return view('categories.peach');
-    }
-
-    public function list()
-    {
-        return view('admin.category.list');
+        $categories = Category::all();
+        $category = Category::find($id);
+        $products = Product::select(['products.*', 'categories.name as category_name'])
+            ->join('categories', 'category_id', 'id')
+            ->where('category_id', '=', $id)
+            ->orderBy('id', 'DESC')
+            ->get();
+        // dd($products);
+        return view('categories.list', compact('products', 'category', 'categories'));
     }
 }

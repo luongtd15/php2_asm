@@ -2,45 +2,43 @@
 
 namespace App\Controllers;
 
+use App\Models\Category;
+use App\Models\Product;
+
 class HomeController
 {
     public function index()
     {
-        return view('home');
+        $categories = Category::all();
+        $products = Product::select(['products.*', 'categories.name as category_name'])
+            ->join('categories', 'category_id', 'id')
+            ->orderBy('id', 'DESC')
+            ->get();
+        // dd($products);
+        return view('home', compact('products', 'categories'));
     }
 
     public function about()
     {
-        return view('about');
+        $categories = Category::all();
+        return view('about', compact('categories'));
     }
 
     public function contact()
     {
-        return view('contact');
+        $categories = Category::all();
+        return view('contact', compact('categories'));
     }
 
     public function cart()
     {
-        return view('cart');
+        $categories = Category::all();
+        return view('cart', compact('categories'));
     }
 
     public function checkout()
     {
-        return view('checkout');
-    }
-
-    public function register()
-    {
-        return view('register');
-    }
-
-    public function login()
-    {
-        return view('login');
-    }
-
-    public function admin()
-    {
-        return view('admin.home');
+        $categories = Category::all();
+        return view('checkout', compact('categories'));
     }
 }
