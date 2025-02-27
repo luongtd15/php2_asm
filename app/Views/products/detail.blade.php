@@ -23,7 +23,7 @@ Detail
 <!-- Product -->
 <section class="section-product padding-t-100">
     <div class="container">
-        <div class="row mb-minus-24" data-aos="fade-up" data-aos-duration="2000" data-aos-delay="600">
+        <div class="row mb-minus-24" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="600">
             <div class="col-xxl-4 col-xl-5 col-md-6 col-12 mb-24">
                 <div class="vehicle-detail-banner banner-content clearfix">
                     <div class="banner-slider">
@@ -159,6 +159,28 @@ Detail
                         <span class="new-price">{{ $productById->price }}VND</span>
                     </div>
 
+                    <?php if (isset($_SESSION['add_to_cart_error'])): ?>
+                        <div class="cr-product-price">
+                            <div class="alert alert-danger">
+                                <?php
+                                echo $_SESSION['add_to_cart_error'];
+                                unset($_SESSION['add_to_cart_error']); // Xóa session sau khi hiển thị
+                                ?>
+                            </div>
+                        </div>
+                    <?php endif; ?>
+
+                    <?php if (isset($_SESSION['add_to_cart_success'])): ?>
+                        <div class="cr-product-price">
+                            <div class="alert alert-success">
+                                <?php
+                                echo $_SESSION['add_to_cart_success'];
+                                unset($_SESSION['add_to_cart_success']); // Xóa session sau khi hiển thị
+                                ?>
+                            </div>
+                        </div>
+                    <?php endif; ?>
+
                     <div class="cr-add-card">
                         @if ($productById->stock == 0 && $productById->status == 'unavailable')
 
@@ -175,15 +197,20 @@ Detail
 
                         @else
 
-                        <div class="cr-qty-main">
-                            <input type="text" placeholder="." value="1" minlength="1" maxlength="20"
-                                class="quantity">
-                            <button type="button" class="plus">+</button>
-                            <button type="button" class="minus">-</button>
-                        </div>
-                        <div class="cr-add-button">
-                            <button type="button" class="cr-button cr-shopping-bag">Add to cart</button>
-                        </div>
+                        <form action="{{ APP_URL . 'product/detail/' . $productById->id}}" method="post">
+
+                            <span class="d-flex" style="gap: 10px; align-items: center;">
+                                <div style="width: 100px; flex: 1;">
+                                    <input type="text" value="{{ $data['quantity'] }}" class="quantity" name="quantity" placeholder="1"
+                                        style="width: 100%; box-sizing: border-box; text-align: center;">
+                                    <input type="number" name="unit_price" value="{{ $productById->price }}" hidden>
+                                </div>
+                                <div class="cr-add-button" style="width: 100px; flex: 1;">
+                                    <button class="cr-button cr-shopping-bag" type="submit" style="width: 100%;">Add to cart</button>
+                                </div>
+                            </span>
+
+                        </form>
 
                         @endif
 
@@ -415,4 +442,5 @@ Detail
         </div>
     </div>
 </section>
+
 @endsection

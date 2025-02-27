@@ -124,6 +124,7 @@ dữ liệu và value tương ứng
 
         return $model;
     }
+
     /**
      * @method get: lấy dữ liệu
      */
@@ -196,5 +197,39 @@ dữ liệu và value tương ứng
     {
         $this->sqlBuilder .= " JOIN $table ON $this->tableName.$parentKey = $table.$childKey";
         return $this;
+    }
+
+    public static function updateQuantity($userId, $productId, $quantity)
+    {
+        $model = new static;
+
+        // Câu lệnh UPDATE: Cộng thêm quantity mới vào quantity cũ và cập nhật total_price
+        $sql = "UPDATE `$model->tableName` 
+            SET `quantity` = `quantity` + :quantity, 
+                `total_price` = `total_price` + :quantity * `unit_price`
+            WHERE `user_id` = :userId AND `product_id` = :productId";
+
+        $stmt = $model->conn->prepare($sql);
+        $stmt->execute([
+            'quantity' => $quantity,
+            'userId' => $userId,
+            'productId' => $productId
+        ]);
+    }
+
+    public static function updateStock($productId, $stock)
+    {
+        $model = new static;
+
+        // Câu lệnh UPDATE: Cộng thêm quantity mới vào quantity cũ và cập nhật total_price
+        $sql = "UPDATE `$model->tableName` 
+            SET `stock` = `stock` - :stock
+            WHERE `id` = :productId";
+
+        $stmt = $model->conn->prepare($sql);
+        $stmt->execute([
+            'stock' => $stock,
+            'productId' => $productId
+        ]);
     }
 }

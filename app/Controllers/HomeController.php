@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Models\Cart;
 use App\Models\Category;
 use App\Models\Product;
 
@@ -33,8 +34,15 @@ class HomeController
     public function cart()
     {
         $categories = Category::all();
-        return view('cart', compact('categories'));
+        $productsInCart = Cart::select(['carts.*', 'products.*', 'users.*'])
+            ->join('products', 'product_id', 'id')
+            ->join('users', 'user_id', 'id')
+            ->get();
+        // dd($productsInCart);
+        return view('cart', compact('categories', 'productsInCart'));
     }
+
+
 
     public function checkout()
     {
