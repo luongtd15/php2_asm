@@ -1,6 +1,6 @@
-@extends('admin.layout');
+@extends('admin.layout')
 
-@section('title', 'Edit this user');
+@section('title', 'Edit this user')
 
 @section('content')
 <div class="cr-main-content">

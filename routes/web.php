@@ -1,8 +1,10 @@
 <?php
 
 use App\Controllers\AuthController;
+use App\Controllers\CartController;
 use App\Controllers\CategoryController;
 use App\Controllers\HomeController;
+use App\Controllers\InvoiceController;
 use App\Controllers\ProductController;
 
 
@@ -20,13 +22,14 @@ $router->get('/contact', [HomeController::class, 'contact']);
 
 
 $router->get('/cart', [HomeController::class, 'cart']);
+$router->post('/cart', [CartController::class, 'updateCart']);
 
-$router->get('/checkout', [HomeController::class, 'checkout']);
+$router->get('/checkout', [InvoiceController::class, 'createInvoice']);
 
 $router->get('/products', [ProductController::class, 'list']);
 
 $router->get('/product/detail/{id}', [ProductController::class, 'detail']);
-$router->post('/product/detail/{id}', [ProductController::class, 'addToCart']);
+$router->post('/product/detail/{id}', [CartController::class, 'addToCart']);
 
 $router->get('/products/{id}', [CategoryController::class, 'productByCategory']);
 // $router->get('/products/grapes', [CategoryController::class, 'productByCategory']);

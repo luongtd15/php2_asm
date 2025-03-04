@@ -1,6 +1,6 @@
-@extends('admin.layout');
+@extends('admin.layout')
 
-@section('title', 'Home');
+@section('title', 'Home')
 
 @section('content')
 <!-- Main content -->

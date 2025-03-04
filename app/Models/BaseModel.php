@@ -125,6 +125,13 @@ dữ liệu và value tương ứng
         return $model;
     }
 
+    public function whereClause($column, $operator, $value)
+    {
+        $this->sqlBuilder .= " WHERE `$column` $operator '$value'";
+
+        return $this;
+    }
+
     /**
      * @method get: lấy dữ liệu
      */
@@ -217,19 +224,44 @@ dữ liệu và value tương ứng
         ]);
     }
 
-    public static function updateStock($productId, $stock)
+    public static function setQuantity($userId, $productId, $quantity)
     {
         $model = new static;
 
         // Câu lệnh UPDATE: Cộng thêm quantity mới vào quantity cũ và cập nhật total_price
         $sql = "UPDATE `$model->tableName` 
-            SET `stock` = `stock` - :stock
-            WHERE `id` = :productId";
+            SET `quantity` = :quantity, 
+                `total_price` = :quantity * `unit_price`
+            WHERE `user_id` = :userId AND `product_id` = :productId";
 
+        $stmt = $model->conn->prepare($sql);
+        $stmt->execute([
+            'quantity' => $quantity,
+            'userId' => $userId,
+            'productId' => $productId
+        ]);
+    }
+
+    public static function updateStock($productId, $stock, $operator)
+    {
+        $model = new static;
+
+        // Giảm stock của sản phẩm
+        $sql = "UPDATE `$model->tableName` 
+            SET `stock` = `stock` $operator :stock
+            WHERE `id` = :productId";
         $stmt = $model->conn->prepare($sql);
         $stmt->execute([
             'stock' => $stock,
             'productId' => $productId
         ]);
+
+        // Kiểm tra nếu stock = 0 thì cập nhật trạng thái thành 'unavailable'
+        $sql = "UPDATE `$model->tableName` 
+            SET `status` = 'unavailable' 
+            WHERE `id` = :productId AND `stock` <= 0";
+        $stmt = $model->conn->prepare($sql);
+        $stmt->execute(['productId' => $productId]);
     }
+
 }

@@ -129,7 +129,7 @@ Home
                                     </div>
                                 </div>
                                 <a href="{{ APP_URL . 'product/detail/' . $product->id }}" class="title">{{ $product->name }}</a>
-                                <p class="cr-price"><span class="new-price">{{ $product->price }}VND</span>
+                                <p class="cr-price"><span class="new-price">{{ number_format($product->price) }}VND</span>
                             </div>
 
                         </div>

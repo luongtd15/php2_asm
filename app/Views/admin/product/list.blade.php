@@ -1,6 +1,6 @@
-@extends('admin.layout');
+@extends('admin.layout')
 
-@section('title', 'Product List');
+@section('title', 'Product List')
 
 @section('content')
 <div class="cr-main-content">

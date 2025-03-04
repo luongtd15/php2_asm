@@ -1,6 +1,6 @@
-@extends('layout');
+@extends('layout')
 
-@section('title', 'Login');
+@section('title', 'Login')
 
 @section('content')
 <section class="section-breadcrumb">

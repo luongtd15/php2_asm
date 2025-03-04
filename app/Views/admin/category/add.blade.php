@@ -1,6 +1,6 @@
-@extends('admin.layout');
+@extends('admin.layout')
 
-@section('title', 'Add a new category');
+@section('title', 'Add a new category')
 
 @section('content')
 <div class="cr-main-content">

@@ -12,7 +12,7 @@ Detail
             <div class="row">
                 <div class="col-lg-12">
                     <div class="cr-breadcrumb-title">
-                        <h2>{{ $product->name }}</h2>
+                        <h2>{{ $productById->name }}</h2>
                     </div>
                 </div>
             </div>
@@ -150,13 +150,13 @@ Detail
                                 @endif
                                 @endforeach
                             </li>
-                            <li><label>Stock <span>:</span></label>{{ $productById->stock }}</li>
+                            <li><label>Stock <span>:</span></label>{{ number_format($productById->stock) }}</li>
                             <li><label>Status <span>:</span></label>{{ $productById->status }}</li>
                         </ul>
                     </div>
 
                     <div class="cr-product-price">
-                        <span class="new-price">{{ $productById->price }}VND</span>
+                        <span class="new-price">{{ number_format($productById->price) }}VND</span>
                     </div>
 
                     <?php if (isset($_SESSION['add_to_cart_error'])): ?>
@@ -203,7 +203,7 @@ Detail
                                 <div style="width: 100px; flex: 1;">
                                     <input type="text" value="{{ $data['quantity'] }}" class="quantity" name="quantity" placeholder="1"
                                         style="width: 100%; box-sizing: border-box; text-align: center;">
-                                    <input type="number" name="unit_price" value="{{ $productById->price }}" hidden>
+                                    <input type="number" name="unit_price" value="{{ number_format($productById->price) }}" hidden>
                                 </div>
                                 <div class="cr-add-button" style="width: 100px; flex: 1;">
                                     <button class="cr-button cr-shopping-bag" type="submit" style="width: 100%;">Add to cart</button>
