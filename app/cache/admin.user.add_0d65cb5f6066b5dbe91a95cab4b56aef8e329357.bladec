@@ -1,6 +1,6 @@
-<?php $_shouldextend[1]=1; ?>;
+<?php $_shouldextend[1]=1; ?>
 
-<?php $this->startSection('title', 'Add a new user'); ?>;
+<?php $this->startSection('title', 'Add a new user'); ?>
 
 <?php $this->startSection('content'); ?>
 <div class="cr-main-content">

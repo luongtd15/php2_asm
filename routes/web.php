@@ -27,6 +27,7 @@ $router->post('/cart', [CartController::class, 'updateCart']);
 $router->get('/checkout', [InvoiceController::class, 'createInvoice']);
 
 $router->get('/products', [ProductController::class, 'list']);
+$router->get('/products/summer-collection', [ProductController::class, 'list']);
 
 $router->get('/product/detail/{id}', [ProductController::class, 'detail']);
 $router->post('/product/detail/{id}', [CartController::class, 'addToCart']);

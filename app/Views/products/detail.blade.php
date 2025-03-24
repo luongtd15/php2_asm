@@ -197,21 +197,22 @@ Detail
 
                         @else
 
-                        <form action="{{ APP_URL . 'product/detail/' . $productById->id}}" method="post">
-
-                            <span class="d-flex" style="gap: 10px; align-items: center;">
-                                <div style="width: 100px; flex: 1;">
-                                    <input type="text" value="{{ $data['quantity'] }}" class="quantity" name="quantity" placeholder="1"
-                                        style="width: 100%; box-sizing: border-box; text-align: center;">
-                                    <input type="number" name="unit_price" value="{{ number_format($productById->price) }}" hidden>
-                                </div>
-                                <div class="cr-add-button" style="width: 100px; flex: 1;">
-                                    <button class="cr-button cr-shopping-bag" type="submit" style="width: 100%;">Add to cart</button>
-                                </div>
-                            </span>
-
+                        <form action="{{ APP_URL . 'product/detail/' . $productById->id }}" method="post">
+                            <div class="d-flex" style="gap: 10px; align-items: center; display: flex;">
+                                <input type="text" value="{{ $data['quantity'] ?? 1 }}" 
+                                    class="quantity" name="quantity" placeholder="1" 
+                                    style="flex: 1; text-align: center; border-radius: 5px; 
+                                    border: 1px solid #ccc; height: 40px;">
+                        
+                                <input type="number" name="unit_price" value="{{ number_format($productById->price) }}" hidden>
+                        
+                                <button class="cr-button-product-detail cr-shopping-bag" type="submit" 
+                                    style="flex: 1; white-space: nowrap; height: 40px;">
+                                    Add to cart
+                                </button>
+                            </div>
                         </form>
-
+                        
                         @endif
 
                         <div class="cr-card-icon">

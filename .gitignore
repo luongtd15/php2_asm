@@ -1,0 +1,69 @@
+# Hệ điều hành
+.DS_Store
+Thumbs.db
+
+# Các thư mục build/output
+dist/
+build/
+out/
+
+# Các thư mục dependency
+node_modules/
+vendor/
+venv/
+.env/
+
+# Các file config cá nhân
+*.env
+*.local
+*.log
+
+# Các IDE phổ biến
+.vscode/
+.idea/
+*.iml
+
+# Git specific
+.git/
+.gitignore
+
+# Python
+__pycache__/
+*.pyc
+
+# PHP/Laravel
+storage/
+bootstrap/cache/
+.env.backup
+.env.example
+/public/hot
+/public/storage
+/public/uploads
+/database/database.sqlite
+/database/*.sqlite
+
+# Blade One
+cache/
+compiled/
+/views/cache/
+/views/compiled/
+
+# Composer
+composer.phar
+composer.lock
+
+# Laravel log & debug
+*.log
+*.key
+
+# Java
+*.class
+*.jar
+*.war
+*.ear
+
+# C++
+*.o
+*.obj
+*.exe
+*.out

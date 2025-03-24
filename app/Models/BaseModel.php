@@ -120,15 +120,26 @@ dữ liệu và value tương ứng
     {
         $model = new static;
         $model->sqlBuilder = "SELECT * FROM $model->tableName WHERE `$column` $operator
-        '$value'";
+        '$value' ";
 
         return $model;
     }
 
     public function whereClause($column, $operator, $value)
     {
-        $this->sqlBuilder .= " WHERE `$column` $operator '$value'";
+        // Nếu cột chưa có tên bảng, tự động thêm bảng chính (ví dụ: products)
+        if (!str_contains($column, '.')) {
+            $column = "$this->tableName.$column";
+        }
 
+        $this->sqlBuilder .= " WHERE $column $operator '$value'";
+        return $this;
+    }
+
+
+    public function whereRaw($condition)
+    {
+        $this->sqlBuilder .= " WHERE $condition ";
         return $this;
     }
 
@@ -202,7 +213,7 @@ dữ liệu và value tương ứng
      */
     public function join($table, $parentKey, $childKey)
     {
-        $this->sqlBuilder .= " JOIN $table ON $this->tableName.$parentKey = $table.$childKey";
+        $this->sqlBuilder .= " JOIN $table ON $this->tableName.$parentKey = $table.$childKey ";
         return $this;
     }
 
@@ -264,4 +275,32 @@ dữ liệu và value tương ứng
         $stmt->execute(['productId' => $productId]);
     }
 
+    public function paginate($page = 1, $limit = 8)
+    {
+        $offset = ($page - 1) * $limit;
+
+        // Gắn LIMIT vào truy vấn hiện tại
+        $this->sqlBuilder .= " LIMIT :limit OFFSET :offset";
+        $stmt = $this->conn->prepare($this->sqlBuilder);
+        $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
+        $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
+        $stmt->execute();
+        $data = $stmt->fetchAll(PDO::FETCH_CLASS);
+
+        // Lấy tổng số bản ghi từ truy vấn hiện tại (bỏ LIMIT và OFFSET)
+        $countQuery = preg_replace('/SELECT (.+?) FROM/i', 'SELECT COUNT(*) FROM', $this->sqlBuilder);
+        $countQuery = preg_replace('/LIMIT(.*)/i', '', $countQuery); // Xóa LIMIT để lấy số bản ghi thực tế
+
+        $countStmt = $this->conn->prepare($countQuery);
+        $countStmt->execute();
+        $totalRows = $countStmt->fetchColumn();
+
+        $totalPages = ($totalRows > $limit) ? ceil($totalRows / $limit) : 1; // Nếu dưới 8 record thì chỉ có 1 trang
+
+        return [
+            'data' => $data,
+            'total_pages' => $totalPages,
+            'current_page' => $page
+        ];
+    }
 }

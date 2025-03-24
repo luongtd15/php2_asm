@@ -21,15 +21,28 @@ class ProductController
 
     public function search()
     {
-        $keyword = trim($_GET['search']) ?? '';
+        $keyword = trim($_GET['q']) ?? '';
 
         if (empty($keyword)) {
             return view('result', ['products' => []]);
         }
 
-        $products = Product::where('name', 'LIKE', "%$keyword%")->get();
+        $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+        $limit = 8; // Số sản phẩm trên mỗi trang
+
+        $products = Product::select(['products.*', 'categories.name as category_name'])
+            ->join('categories', 'category_id', 'id') // JOIN đúng cách
+            ->whereClause('name', 'LIKE', "%$keyword%") // WHERE tự động thêm bảng
+            ->get();
+
+        $pagination = Product::select(['products.*', 'categories.name as category_name'])
+            ->join('categories', 'category_id', 'id')
+            ->whereClause('name', 'LIKE', "%$keyword%")
+            ->paginate($page, $limit);
+
+        // dd($products);
         $categories = Category::all();
-        return view('result', compact('products', 'categories'));
+        return view('result', compact('products', 'categories', 'pagination'));
     }
 
     public function detail($id)
@@ -43,6 +56,4 @@ class ProductController
         // dd($product);
         return view('products.detail', compact('productById', 'id', 'categories', 'products'));
     }
-
-    
 }

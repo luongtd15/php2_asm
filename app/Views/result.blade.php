@@ -57,7 +57,7 @@ Search Result
                     </div>
                 </div>
                 <div class="row col-50 mb-minus-24">
-                    @foreach ($products as $product)
+                    @foreach ($pagination['data'] as $product)
                     <div class="col-lg-3 col-6 cr-product-box mb-24">
                         <div class="cr-product-card">
                             <div class="cr-product-image">
@@ -79,7 +79,9 @@ Search Result
                             </div>
                             <div class="cr-product-details">
                                 <div class="cr-brand">
-                                    <a href="{{ APP_URL . 'products/'. strtolower($product->category_name)}}">{{ $product->category_name }}</a>
+                                    <a href="{{ APP_URL . 'products/'. strtolower($product->category_name)}}">
+                                        {{ $product->category_name }}
+                                    </a>
                                     <div class="cr-star">
                                         <i class="ri-star-fill"></i>
                                         <i class="ri-star-fill"></i>
@@ -89,9 +91,12 @@ Search Result
                                         <p>(4.5)</p>
                                     </div>
                                 </div>
-                                <a href="{{ APP_URL . 'product/detail/' . $product->id }}" class="title">{{ $product->name }}</a>
+                                <a href="{{ APP_URL . 'product/detail/' . $product->id }}" class="title">
+                                    {{ substr($product->name, 0, 30) 
+                                    . (strlen($product->name) > 30 ? '...' : '') }}
+                                    </a>
                                 <p class="text">{{ $product->description }}</p>
-                                <p class="cr-price"><span class="new-price">{{ $product->price }}VND</span>
+                                <p class="cr-price"><span class="new-price">{{ number_format($product->price) }}VND</span>
                             </div>
                         </div>
                     </div>
@@ -99,16 +104,29 @@ Search Result
                 </div>
                 <nav aria-label="..." class="cr-pagination">
                     <ul class="pagination">
-                        <li class="page-item disabled">
-                            <span class="page-link">Previous</span>
+                        <li class="page-item {{ $pagination['current_page'] == 1 ? 'disabled' : '' }}">
+                            <a class="page-link" 
+                               href="?q={{ $_GET['q'] ?? '' }}&page={{ $pagination['current_page'] - 1 }}" 
+                               {{ $pagination['current_page'] == 1 ? 'tabindex="-1" aria-disabled="true"' : '' }}>
+                                Previous
+                            </a>
                         </li>
-                        <li class="page-item active" aria-current="page">
-                            <span class="page-link">1</span>
-                        </li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+
+                        @for ($i = 1; $i <= $pagination['total_pages']; $i++)
                         <li class="page-item">
-                            <a class="page-link" href="#">Next</a>
+                            <a href="?q={{ $_GET['q'] ?? '' }}&page={{ $i }}" 
+                            class="{{ $i == $pagination['current_page'] ? 'active' : '' }} page-link">
+                                {{ $i }}
+                            </a>
+                        </li>
+                        @endfor
+                        
+                        <li class="page-item {{ $pagination['current_page'] == $pagination['total_pages'] ? 'disabled' : '' }}">
+                            <a class="page-link" 
+                               href="?q={{ $_GET['q'] ?? '' }}&page={{ $pagination['current_page'] + 1 }}" 
+                               {{ $pagination['current_page'] == $pagination['total_pages'] ? 'tabindex="-1" aria-disabled="true"' : '' }}>
+                                Next
+                            </a>
                         </li>
                     </ul>
                 </nav>

@@ -53,8 +53,8 @@ Cart
                                         <tr>
                                             <th>Product</th>
                                             <th>price (VND)</th>
-                                            <th>stock (kg)</th>
-                                            <th>Quantity (kg)</th>
+                                            <th>stock (pcs)</th>
+                                            <th>Quantity</th>
                                             <th>Total (VND)</th>
                                             <th>Action</th>
                                         </tr>
@@ -63,7 +63,7 @@ Cart
                                         @foreach ($productsInCart as $productInCart)
                                         <tr>
                                             <td class="cr-cart-name">
-                                                <a href="javascript:void(0)">
+                                                <a href="{{ APP_URL . 'product/detail/' . $productInCart->id }}">
                                                     <img src="{{ APP_URL . $productInCart->image }}" alt="product-1"
                                                         class="cr-cart-img">
                                                     {{ $productInCart->name }}

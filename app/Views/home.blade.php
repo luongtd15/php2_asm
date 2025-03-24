@@ -15,15 +15,20 @@ Home
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="cr-left-side-contain slider-animation">
-                                    <h5><span>100%</span> Organic Fruits</h5>
-                                    <h1>Explore fresh & juicy fruits.</h1>
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet reiciendis
-                                        beatae consequuntur.</p>
-                                    <div class="cr-last-buttons">
-                                        <a href="shop-left-sidebar.html" class="cr-button">
-                                            shop now
-                                        </a>
-                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-slide">
+                <div class="cr-hero-banner cr-banner-image-three">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="cr-left-side-contain slider-animation">
+                                    
                                 </div>
                             </div>
                         </div>
@@ -36,15 +41,7 @@ Home
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="cr-left-side-contain slider-animation">
-                                    <h5><span>100%</span> Organic Vegetables</h5>
-                                    <h1>The best way to stuff your wallet.</h1>
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet reiciendis
-                                        beatae consequuntur.</p>
-                                    <div class="cr-last-buttons">
-                                        <a href="shop-left-sidebar.html" class="cr-button">
-                                            shop now
-                                        </a>
-                                    </div>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -83,10 +80,10 @@ Home
                         <div class="cr-ice-cubes">
                             <img src="image/product/product-banner.jpg" alt="product banner">
                             <div class="cr-ice-cubes-contain">
-                                <h4 class="title">Juicy </h4>
-                                <h5 class="sub-title">Fruits</h5>
-                                <span>100% Natural</span>
-                                <a href="shop-left-sidebar.html" class="cr-button">Shop Now</a>
+                                <h4 class="title">Summer </h4>
+                                <h5 class="sub-title">2025</h5>
+                                <span>Limited Summer Edition</span>
+                                <a href="" class="cr-button">Shop Now</a>
                             </div>
                         </div>
                     </div>
@@ -95,7 +92,7 @@ Home
             </div>
             <div class="col-xl-9 col-lg-8 col-12 mb-24">
                 <div class="row mb-minus-24">
-                    @foreach ($products as $product)
+                    @foreach ($pagination['data'] as $product)
                     <div class="mix snack col-xxl-3 col-xl-4 col-6 cr-product-box mb-24">
                         <div class="cr-product-card">
                             <div class="cr-product-image">
@@ -128,7 +125,10 @@ Home
                                         <p>(4.5)</p>
                                     </div>
                                 </div>
-                                <a href="{{ APP_URL . 'product/detail/' . $product->id }}" class="title">{{ $product->name }}</a>
+                                <a href="{{ APP_URL . 'product/detail/' . $product->id }}" class="title">
+                                    {{ substr($product->name, 0, 30) 
+                                    . (strlen($product->name) > 30 ? '...' : '') }}
+                                </a>
                                 <p class="cr-price"><span class="new-price">{{ number_format($product->price) }}VND</span>
                             </div>
 
@@ -138,6 +138,34 @@ Home
                     </div>
                     @endforeach
                 </div>
+                <nav aria-label="..." class="cr-pagination">
+                    <ul class="pagination">
+                        <li class="page-item {{ $pagination['current_page'] == 1 ? 'disabled' : '' }}">
+                            <a class="page-link" 
+                               href="?q={{ $_GET['q'] ?? '' }}&page={{ $pagination['current_page'] - 1 }}" 
+                               {{ $pagination['current_page'] == 1 ? 'tabindex="-1" aria-disabled="true"' : '' }}>
+                                Previous
+                            </a>
+                        </li>
+
+                        @for ($i = 1; $i <= $pagination['total_pages']; $i++)
+                        <li class="page-item">
+                            <a href="?q={{ $_GET['q'] ?? '' }}&page={{ $i }}" 
+                            class="{{ $i == $pagination['current_page'] ? 'active' : '' }} page-link">
+                                {{ $i }}
+                            </a>
+                        </li>
+                        @endfor
+                        
+                        <li class="page-item {{ $pagination['current_page'] == $pagination['total_pages'] ? 'disabled' : '' }}">
+                            <a class="page-link" 
+                               href="?q={{ $_GET['q'] ?? '' }}&page={{ $pagination['current_page'] + 1 }}" 
+                               {{ $pagination['current_page'] == $pagination['total_pages'] ? 'tabindex="-1" aria-disabled="true"' : '' }}>
+                                Next
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
             </div>
         </div>
     </div>
@@ -266,7 +294,7 @@ Home
             <div class="col-xxl-7 col-xl-6 col-lg-6 col-md-12" data-aos="fade-up" data-aos-duration="2000">
 
                 <div class="cr-twocolumns-product">
-                    @foreach ($products as $product)
+                    @foreach ($springCollectionProducts as $product)
                     <div class="slick-slide">
                         <div class="cr-product-card">
                             <div class="cr-product-image">
@@ -298,7 +326,10 @@ Home
                                         <p>(4.5)</p>
                                     </div>
                                 </div>
-                                <a href="{{ APP_URL . 'product/detail/' . $product->id }}" class="title">{{ $product->name }}</a>
+                                <a href="{{ APP_URL . 'product/detail/' . $product->id }}" class="title">
+                                    {{ substr($product->name, 0, 30) 
+                                    . (strlen($product->name) > 30 ? '...' : '') }}
+                                </a>
                                 <p class="cr-price"><span class="new-price">{{ $product->price }}VND</span></p>
                             </div>
                         </div>

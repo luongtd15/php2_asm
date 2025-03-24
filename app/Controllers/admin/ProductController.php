@@ -31,10 +31,12 @@ class ProductController
     {
         $data = $_POST;
 
+        $data['season'] = !empty($data['season']) ? $data['season'] : NULL;
+
+        // dd($data);
+
         if (trim($data['name'] == '')) {
             $errors['name'] = 'Name is required.';
-        } else if (strlen($data['name']) > 20) {
-            $errors['name'] = 'Name cannot longer than 20 characters.';
         }
 
         if (trim($data['description'] == '')) {
@@ -97,12 +99,11 @@ class ProductController
     public function productUpdate($id)
     {
         $data = $_POST;
+        $data['season'] = !empty($data['season']) ? $data['season'] : NULL;
         $product = Product::find($id);
 
         if (trim($data['name'] == '')) {
             $errors['name'] = 'Name is required.';
-        } else if (strlen($data['name']) > 20) {
-            $errors['name'] = 'Name cannot longer than 20 characters.';
         }
 
         if (!isset($data['description']) || trim($data['description']) === '') {

@@ -63,7 +63,9 @@
                                                     alt="Product Image">
                                             </td>
                                             <td>{{ $product->category_name }}</td>
-                                            <td>{{ $product->name }}</td>
+                                            <td>
+                                                {{ substr($product->name, 0, 30) . (strlen($product->name) > 30 ? '...' : '') }}
+                                            </td>
                                             <td>{{ $product->price }}</td>
                                             <td>{{ $product->stock }}</td>
 

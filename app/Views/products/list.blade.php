@@ -92,9 +92,12 @@ Detail
                                         <p>(4.5)</p>
                                     </div>
                                 </div>
-                                <a href="{{ APP_URL . 'product/detail/' . $product->id }}" class="title">{{ $product->name }}</a>
+                                <a href="{{ APP_URL . 'product/detail/' . $product->id }}" class="title">
+                                    {{ substr($product->name, 0, 30) 
+                                    . (strlen($product->name) > 30 ? '...' : '') }}
+                                </a>
                                 <p class="text">{{ $product->description }}</p>
-                                <p class="cr-price"><span class="new-price">{{ $product->price }}VND</span>
+                                <p class="cr-price"><span class="new-price">{{ number_format($product->price) }}VND</span>
                             </div>
                         </div>
                     </div>

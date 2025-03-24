@@ -53,13 +53,14 @@
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <label>Name</label>
-                                                    <div class="col-12">
-                                                        <input id="name" name="name"
-                                                            class="form-control here slug-title" type="text"
-                                                            value="{{ $_SESSION['product_recent_data']['name'] }}">
-                                                        <?php unset($_SESSION['product_recent_data']['name']) ?>
-                                                    </div>
+                                                    <label for="" class="label-control">Collection</label>
+                                                    <select name="season" id="" class="form-control">
+                                                        <option value="">No Season</option>
+                                                        <option value="spring">Spring</option>
+                                                        <option value="summer">Summer</option>
+                                                        <option value="fall">Fall</option>
+                                                        <option value="winter">Winter</option>
+                                                    </select>
                                                 </div>
                                             </div>
 
@@ -93,6 +94,16 @@
                                                 </div>
                                             </div>
 
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Name</label>
+                                            <div class="col-12">
+                                                <input id="name" name="name"
+                                                    class="form-control here slug-title" type="text"
+                                                    value="{{ $_SESSION['product_recent_data']['name'] }}">
+                                                <?php unset($_SESSION['product_recent_data']['name']) ?>
+                                            </div>
                                         </div>
 
                                         <div class="form-group">

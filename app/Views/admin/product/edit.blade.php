@@ -93,10 +93,24 @@
                                                     <label>Description</label>
                                                     <div class="col-12">
                                                         <textarea name="description" id="" class="form-control"
-                                                            style="height:261.5px">
-                                                        {{ $product->description }}
-                                                        </textarea>
+                                                            style="height:175px">{{ $product->description }}</textarea>
                                                     </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="" class="label-control">Collection</label>
+                                                    <select name="season" id="" class="form-control">
+                                                        <option value=""
+                                                        {{ $product->season == 'null' ? 'selected' : '' }}>No Season</option>
+                                                        <option value="spring"
+                                                        {{ $product->season == 'spring' ? 'selected' : '' }}>Spring</option>
+                                                        <option value="summer"
+                                                        {{ $product->season == 'summer' ? 'selected' : '' }}>Summer</option>
+                                                        <option value="fall"
+                                                        {{ $product->season == 'fall' ? 'selected' : '' }}>Fall</option>
+                                                        <option value="winter"
+                                                        {{ $product->season == 'winter' ? 'selected' : '' }}>Winter</option>
+                                                    </select>
                                                 </div>
 
                                                 <div class="form-group">
@@ -107,8 +121,6 @@
                                                             value="{{ $product->stock }}">
                                                     </div>
                                                 </div>
-
-
 
                                                 <div class="form-group">
                                                     <label>Price</label>

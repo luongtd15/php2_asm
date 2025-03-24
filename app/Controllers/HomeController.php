@@ -11,13 +11,25 @@ class HomeController
     public function index()
     {
         $categories = Category::all();
-        $products = Product::select(['products.*', 'categories.name as category_name'])
+
+        // Lấy số trang hiện tại từ query string (mặc định là 1)
+        $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+        $limit = 8; // Số sản phẩm trên mỗi trang
+
+        $springCollectionProducts = Product::select(['products.*', 'categories.name as category_name'])
             ->join('categories', 'category_id', 'id')
-            ->orderBy('id', 'DESC')
             ->get();
-        // dd($products);
-        return view('home', compact('products', 'categories'));
+
+        // Truy vấn sản phẩm có phân trang
+        $pagination = Product::select(['products.*', 'categories.name as category_name'])
+            ->join('categories', 'category_id', 'id')
+            ->whereRaw('products.season IS NULL') // Sử dụng whereRaw để viết đúng cú pháp SQL
+            ->paginate($page, $limit);
+
+        return view('home', 
+        compact('pagination', 'categories', 'springCollectionProducts'));
     }
+
 
     public function about()
     {
@@ -37,7 +49,7 @@ class HomeController
             $_SESSION['login_to_continue'] = 'You have to log in first!';
             redirect('login');
         };
-        
+
         $categories = Category::all();
         $products = Product::select(['products.*', 'categories.name as category_name'])
             ->join('categories', 'category_id', 'id')
@@ -50,10 +62,6 @@ class HomeController
         // dd($productsInCart);
         return view('cart', compact('categories', 'productsInCart', 'products'));
     }
-
-
-
-
 
     public function checkout()
     {
